@@ -469,6 +469,54 @@ p {
     border-bottom-style: solid;
 }
 
+/* White Underlined Numbers & Interactive Transitions */
+.underline-animate {
+    color: #ffffff !important;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 2px;
+    display: inline-block;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.underline-animate::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: scaleX(0.75);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+.underline-animate:hover {
+    color: var(--accent-color) !important;
+}
+
+.underline-animate:hover::after {
+    transform: scaleX(1);
+    background-color: var(--accent-color);
+}
+
+/* Safe overrides to disable mobile OS auto-linking blue */
+a[href^="tel"], 
+a[href^="mailto"], 
+.monospace-value span, 
+.credentials-grid a,
+.credentials-grid span {
+    color: #ffffff !important;
+}
+
+a[href^="tel"]:hover, 
+a[href^="mailto"]:hover,
+.credentials-grid a:hover {
+    color: var(--accent-color) !important;
+}
+
 /* --------------------------------------------------------------------------
    6. About Section
    -------------------------------------------------------------------------- */
@@ -585,29 +633,93 @@ p {
     transform: scale(1.05);
 }
 
-/* Custom SVG Animations */
+/* Custom SVG Animations (Continuous for Mobile & Desktop) */
 @keyframes status-pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(1.1); }
 }
 
+/* Node pulse animation - runs continuously, accelerates on hover */
 @keyframes node-pulse {
     0%, 100% { fill: #1e2230; stroke: #00f59b; }
-    50% { fill: rgba(0, 245, 155, 0.2); stroke: #00f59b; }
+    50% { fill: rgba(0, 245, 155, 0.25); stroke: #00f59b; }
 }
 
-.product-block:hover .node-pulse-1 { animation: node-pulse 2s infinite 0.2s; }
-.product-block:hover .node-pulse-2 { animation: node-pulse 2s infinite 0.6s; }
-.product-block:hover .node-pulse-3 { animation: node-pulse 2s infinite 1s; }
-.product-block:hover .node-pulse-4 { animation: node-pulse 2s infinite 1.4s; }
+.node-pulse-1 { animation: node-pulse 3s infinite 0.1s ease-in-out; }
+.node-pulse-2 { animation: node-pulse 3s infinite 0.8s ease-in-out; }
+.node-pulse-3 { animation: node-pulse 3s infinite 1.5s ease-in-out; }
+.node-pulse-4 { animation: node-pulse 3s infinite 2.2s ease-in-out; }
 
+.product-block:hover .node-pulse-1,
+.product-block:hover .node-pulse-2,
+.product-block:hover .node-pulse-3,
+.product-block:hover .node-pulse-4 {
+    animation-duration: 1.2s;
+}
+
+/* RAnA Network Path Data Flow Animation */
+.rana-path {
+    stroke: #1e2230;
+    stroke-dasharray: 4 6;
+    animation: rana-flow-pulse 5s linear infinite;
+}
+
+@keyframes rana-flow-pulse {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -20; }
+}
+
+.product-block:hover .rana-path {
+    stroke: var(--accent-color);
+    animation-duration: 1.8s;
+}
+
+/* Zero Loop Rotating Animation */
 @keyframes rotate-loop {
     0% { transform: rotate(0deg); transform-origin: 71px 60px; }
     100% { transform: rotate(360deg); transform-origin: 71px 60px; }
 }
 
+.automation-loop {
+    animation: rotate-loop 20s linear infinite;
+}
+
 .product-block:hover .automation-loop {
-    animation: rotate-loop 12s linear infinite;
+    animation-duration: 8s;
+    stroke: var(--accent-color);
+}
+
+/* Zero Wave Pulse Animation */
+.zero-wave {
+    animation: zero-wave-pulse 4s ease-in-out infinite;
+}
+
+@keyframes zero-wave-pulse {
+    0%, 100% { stroke: #1e2230; }
+    50% { stroke: rgba(0, 245, 155, 0.35); }
+}
+
+.product-block:hover .zero-wave {
+    stroke: var(--accent-color);
+    animation-duration: 1.8s;
+}
+
+/* Zero Wave Outer Rotating Ring */
+.zero-wave-outer {
+    stroke: #1e2230;
+    stroke-dasharray: 5 4;
+    animation: zero-outer-rotate 35s linear infinite;
+    transform-origin: 60px 60px;
+}
+
+@keyframes zero-outer-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.product-block:hover .zero-wave-outer {
+    stroke: var(--accent-color);
+    animation-duration: 12s;
 }
 
 .product-content {
@@ -774,10 +886,22 @@ p {
 [data-reveal] {
     opacity: 0;
     transform: translateY(16px);
-    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Entrance of Children */
+.reveal-child {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.revealed .reveal-child {
     opacity: 1;
     transform: translateY(0);
 }

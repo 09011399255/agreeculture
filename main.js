@@ -6,6 +6,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     initScrollReveal();
     initClipboardCopy();
+    initParallaxGrid();
+    initStaggeredReveals();
 });
 
 /**
@@ -112,4 +114,44 @@ function showCopyFeedback(button, tooltip, feedbackText) {
         tooltip.textContent = originalText;
         button.classList.remove('copied');
     }, 2000);
+}
+
+/**
+ * Creates a subtle scroll-driven parallax background drift for the technical grid lines.
+ */
+function initParallaxGrid() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+    
+    window.addEventListener('scroll', () => {
+        requestAnimationFrame(() => {
+            const scrolled = window.scrollY;
+            const gridOverlay = document.querySelector('.grid-overlay');
+            if (gridOverlay) {
+                // Drift the grid slowly downward to create depth
+                gridOverlay.style.transform = `translateY(${scrolled * 0.08}px)`;
+            }
+        });
+    });
+}
+
+/**
+ * Automatically assigns sequential layout entrance delays to child cards
+ * and layout grid elements inside parent containers.
+ */
+function initStaggeredReveals() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    // Select container elements to stagger
+    const containers = document.querySelectorAll('.credentials-grid, .products-container');
+    
+    containers.forEach(container => {
+        const children = container.children;
+        Array.from(children).forEach((child, index) => {
+            // Apply stagger classes and incremental delays
+            child.classList.add('reveal-child');
+            child.style.transitionDelay = `${index * 0.08}s`;
+        });
+    });
 }
