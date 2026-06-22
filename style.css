@@ -639,29 +639,23 @@ a[href^="mailto"]:hover,
     50% { opacity: 0.6; transform: scale(1.1); }
 }
 
-/* Node pulse animation - runs continuously, accelerates on hover */
+/* Node pulse animation - runs continuously, fast speed by default */
 @keyframes node-pulse {
-    0%, 100% { fill: #1e2230; stroke: #00f59b; }
-    50% { fill: rgba(0, 245, 155, 0.25); stroke: #00f59b; }
+    0%, 100% { fill: rgba(0, 245, 155, 0.15); stroke: var(--accent-color); }
+    50% { fill: rgba(0, 245, 155, 0.45); stroke: var(--accent-color); }
 }
 
-.node-pulse-1 { animation: node-pulse 3s infinite 0.1s ease-in-out; }
-.node-pulse-2 { animation: node-pulse 3s infinite 0.8s ease-in-out; }
-.node-pulse-3 { animation: node-pulse 3s infinite 1.5s ease-in-out; }
-.node-pulse-4 { animation: node-pulse 3s infinite 2.2s ease-in-out; }
+.node-pulse-1 { animation: node-pulse 1.2s infinite 0.1s ease-in-out; }
+.node-pulse-2 { animation: node-pulse 1.2s infinite 0.3s ease-in-out; }
+.node-pulse-3 { animation: node-pulse 1.2s infinite 0.5s ease-in-out; }
+.node-pulse-4 { animation: node-pulse 1.2s infinite 0.7s ease-in-out; }
 
-.product-block:hover .node-pulse-1,
-.product-block:hover .node-pulse-2,
-.product-block:hover .node-pulse-3,
-.product-block:hover .node-pulse-4 {
-    animation-duration: 1.2s;
-}
-
-/* RAnA Network Path Data Flow Animation */
+/* RAnA Network Path Data Flow Animation - green and fast by default */
 .rana-path {
-    stroke: #1e2230;
+    stroke: var(--accent-color);
     stroke-dasharray: 4 6;
-    animation: rana-flow-pulse 5s linear infinite;
+    animation: rana-flow-pulse 1.8s linear infinite;
+    opacity: 0.75;
 }
 
 @keyframes rana-flow-pulse {
@@ -669,57 +663,40 @@ a[href^="mailto"]:hover,
     to { stroke-dashoffset: -20; }
 }
 
-.product-block:hover .rana-path {
-    stroke: var(--accent-color);
-    animation-duration: 1.8s;
-}
-
-/* Zero Loop Rotating Animation */
+/* Zero Loop Rotating Animation - green and fast by default */
 @keyframes rotate-loop {
     0% { transform: rotate(0deg); transform-origin: 71px 60px; }
     100% { transform: rotate(360deg); transform-origin: 71px 60px; }
 }
 
 .automation-loop {
-    animation: rotate-loop 20s linear infinite;
-}
-
-.product-block:hover .automation-loop {
-    animation-duration: 8s;
     stroke: var(--accent-color);
+    animation: rotate-loop 8s linear infinite;
 }
 
-/* Zero Wave Pulse Animation */
+/* Zero Wave Pulse Animation - green and fast by default */
 .zero-wave {
-    animation: zero-wave-pulse 4s ease-in-out infinite;
+    stroke: var(--accent-color);
+    animation: zero-wave-pulse 1.8s ease-in-out infinite;
 }
 
 @keyframes zero-wave-pulse {
-    0%, 100% { stroke: #1e2230; }
-    50% { stroke: rgba(0, 245, 155, 0.35); }
+    0%, 100% { stroke: rgba(0, 245, 155, 0.3); }
+    50% { stroke: var(--accent-color); }
 }
 
-.product-block:hover .zero-wave {
-    stroke: var(--accent-color);
-    animation-duration: 1.8s;
-}
-
-/* Zero Wave Outer Rotating Ring */
+/* Zero Wave Outer Rotating Ring - green and fast by default */
 .zero-wave-outer {
-    stroke: #1e2230;
+    stroke: var(--accent-color);
     stroke-dasharray: 5 4;
-    animation: zero-outer-rotate 35s linear infinite;
+    animation: zero-outer-rotate 12s linear infinite;
     transform-origin: 60px 60px;
+    opacity: 0.8;
 }
 
 @keyframes zero-outer-rotate {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
-}
-
-.product-block:hover .zero-wave-outer {
-    stroke: var(--accent-color);
-    animation-duration: 12s;
 }
 
 .product-content {
